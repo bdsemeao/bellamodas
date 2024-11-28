@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - La Bella Moda</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #F5F5DC; /* Cor de fundo creme */
+        }
+        .product-card {
+            background-color: #602540; /* Cor dos elementos */
+            color: white;
+            margin: 15px;
+            border-radius: 10px;
+        }
+        .product-img-small {
+            height: 50px; /* Tamanho reduzido da imagem */
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Carrinho de Compras</h1>
+
+    <!-- Tabela para exibir os itens do carrinho -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Imagem</th> <!-- Coluna para a imagem -->
+                <th>Ações</th> <!-- Coluna para ações -->
+            </tr>
+        </thead>
+        <tbody id="carrinho-items">
+
+        </tbody>
+    </table>
+
+    <!-- Botão para finalizar a compra -->
+    <div class="text-center mt-4">
+        <button onclick='finalizarCompra()' class='btn btn-custom'>Finalizar Compra</button>
+    </div>
+
+</div>
+
+<script>
+// Função para exibir os itens do carrinho
+function exibirCarrinho() {
+    const items = JSON.parse(localStorage.getItem('carrinho')) || [];
+    const tbody = document.getElementById('carrinho-items');
+    
+    // Limpa o conteúdo atual da tabela
+    tbody.innerHTML = '';
+
+    // Adiciona cada item à tabela
+    items.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        
+        // Cria uma célula para o nome, preço e imagem
+        tr.innerHTML = `
+            <td>${item.nome}</td>
+            <td>R$ ${item.preco.toFixed(2)}</td>
+            <td><img src="${item.imagem}" alt="${item.nome}" class='product-img-small'></td> 
+            <td><button class='btn btn-danger' onclick='removerDoCarrinho(${index})'>Remover</button></td> 
+        `;
+        
+        tbody.appendChild(tr);
+    });
+}
+
+// Função para remover um item do carrinho
+function removerDoCarrinho(index) {
+    let items = JSON.parse(localStorage.getItem('carrinho')) || [];
+    
+    // Remove o item pelo índice
+    items.splice(index, 1);
+    
+    // Atualiza o localStorage
+    localStorage.setItem('carrinho', JSON.stringify(items));
+    
+    // Atualiza a exibição do carrinho
+    exibirCarrinho();
+}
+
+// Função para finalizar a compra (exemplo)
+function finalizarCompra() {
+    alert("Compra finalizada! Obrigado pela sua compra.");
+}
+
+// Ao carregar a página, exibe o carrinho
+window.onload = exibirCarrinho;
+
+</script>
+
+</body>
+
+</html>

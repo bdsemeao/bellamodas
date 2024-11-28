@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>La Bella Moda - Login</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-image">
+            <img src="B.png" alt="B">
+        </div>
+        <div class="form">
+            <form id="loginForm" onsubmit="return fazerLogin()">
+                <div class="form-header">
+                    <div class="title">
+                        <h1>Entrar</h1>
+                    </div>
+                    <div class="login-button">
+                        <button><a href='cadastro.html'>Cadastrar-se</a></button>
+                    </div>
+                </div>
+
+                <div class='input-group'>
+                    <div class='input-box'>
+                        <label for='email'>E-mail</label>
+                        <input id='email' type='email' name='email' placeholder='Digite seu e-mail' required />
+                    </div>
+
+                    <div class='input-box'>
+                        <label for='password'>Senha</label>
+                        <input id='password' type='password' name='password' placeholder='Digite sua senha' required />
+                    </div>
+                </div>
+
+                <!-- Botão de continuar -->
+                <div class='continue-button'>
+                    <button type='submit'>Entrar</button>
+                </div>
+
+                <!-- Link para recuperação de senha -->
+                <div class='forgot-password'>
+                    <a href='#'>Esqueceu sua senha?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script para validação do login -->
+    <script>
+        function fazerLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Obtém os dados do usuário armazenados no localStorage
+            const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+            // Verifica se o usuário existe e se as credenciais estão corretas
+            if (usuario && usuario.email === email && usuario.password === password) {
+                alert('Login realizado com sucesso!');
+                window.location.href = 'index.html'; // Redireciona para a página inicial
+                return false; // Impede o envio do formulário padrão
+            } else {
+                alert('E-mail ou senha incorretos.');
+                return false; // Impede o envio do formulário padrão
+            }
+        }
+    </script>
+
+</body>
+
+</html>
